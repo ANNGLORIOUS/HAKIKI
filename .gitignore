@@ -1,0 +1,41 @@
+# ---- Secrets (never commit these) ----
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+secrets/
+
+# ---- Python / Django ----
+venv/
+.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.coverage
+htmlcov/
+staticfiles/
+
+# ---- Local data and uploads (evidence is private user data) ----
+db.sqlite3
+*.sqlite3
+media/
+backend_old/
+"backend 1/"
+
+# ---- Node / Next.js (for the frontend) ----
+node_modules/
+.next/
+out/
+build/
+npm-debug.log*
+yarn-error.log*
+next-env.d.ts
+
+# ---- Editors and OS ----
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.log
