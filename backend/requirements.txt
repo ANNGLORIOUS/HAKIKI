@@ -1,0 +1,12 @@
+Django>=4.2,<5.3
+djangorestframework>=3.14,<3.16
+django-environ
+django-cors-headers
+psycopg[binary]
+celery
+redis
+cryptography
+Pillow
+django-storages
+boto3
+requests
