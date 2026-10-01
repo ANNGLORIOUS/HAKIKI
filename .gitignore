@@ -3,7 +3,10 @@
 .env.*
 !.env.example
 *.pem
+!.env.example
 *.key
+.env.local
+!.env.example
 secrets/
 
 # ---- Python / Django ----
