@@ -137,8 +137,9 @@ CORS_ALLOWED_ORIGINS = env.list('CORS_ALLOWED_ORIGINS', default=['http://localho
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': ['rest_framework.authentication.TokenAuthentication'],
-    'DEFAULT_PERMISSION_CLASSES': ['rest_framework.permissions.IsAuthenticatedOrReadOnly'],
+    'DEFAULT_PERMISSION_CLASSES': ['rest_framework.permissions.IsAuthenticated'],  # public views opt in with AllowAny
     'DEFAULT_THROTTLE_CLASSES': ['rest_framework.throttling.AnonRateThrottle', 'rest_framework.throttling.UserRateThrottle', 'rest_framework.throttling.ScopedRateThrottle'],
+    'NUM_PROXIES': env.int('NUM_PROXIES', default=None),  # set to 1 when the API sits behind the Next.js proxy
     'DEFAULT_THROTTLE_RATES': {'anon': '120/min', 'user': '240/min', 'auth': '20/min', 'otp': '5/hour', 'search': '30/min'},
 }
 

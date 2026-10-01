@@ -48,6 +48,7 @@ def page_public(page, detail=True):
             if p.identifier.id_type != "whatsapp"
         ],
         "disputed": page.public_label == Page.Label.DISPUTED,
+        "indexable": page.indexable,
         "last_reviewed": page.last_reviewed_at or page.label_updated_at,
         "safety_tips": SAFETY_TIPS,
         "disclaimer": DISCLAIMER,

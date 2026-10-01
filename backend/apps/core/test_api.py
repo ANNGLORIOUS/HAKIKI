@@ -62,6 +62,13 @@ class ApiBase(TestCase):
 
 
 class AuthTests(ApiBase):
+    def test_private_endpoints_return_401_when_logged_out(self):
+        c = self.client_for()
+        for path in ["/api/auth/me/", "/api/me/reports/"]:
+            self.assertEqual(c.get(path).status_code, 401, path)
+        self.assertEqual(c.get("/api/search/", {"q": "@x"}).status_code, 200)  # public stays public
+        self.assertEqual(c.get("/api/pages/instagram/x/").status_code, 200)
+
     def test_register_verify_email_and_phone(self):
         c = APIClient()
         with patch("apps.accounts.views.deliver") as d:
@@ -169,6 +176,7 @@ class SearchTests(ApiBase):
         page = c.get("/api/pages/instagram/shopke/").data
         self.assertEqual(page["reports_published"], 0)
         self.assertEqual(page["label"], "reports_review")
+        self.assertFalse(page["indexable"])
 
     def test_published_reports_and_number_match_in_any_format(self):
         self.publish_three()
@@ -180,6 +188,7 @@ class SearchTests(ApiBase):
         page = c.get("/api/pages/instagram/shopke/").data
         self.assertEqual(page["label"], "reported_multiple")
         self.assertEqual(page["reports_with_supported_evidence"], 3)
+        self.assertTrue(page["indexable"])  # passed threshold, so search engines may index it
         self.assertEqual(c.get("/api/search/", {"q": "https://instagram.com/shopke"}).data["results"][0]["label"], "reported_multiple")
 
     def test_public_output_never_leaks_private_data(self):
